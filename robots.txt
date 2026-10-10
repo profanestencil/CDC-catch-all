@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://c-p-consulting.xyz/sitemap.xml
+Sitemap: https://www.c-p-consulting.xyz/sitemap.xml

@@ -18,4 +18,4 @@ Open http://localhost:3000
 
 ## Deploy
 
-Deployed on Vercel as a static site. Production: https://c-p-consulting.xyz (DNS pending) and https://cpcstudio.vercel.app
+Deployed on Vercel as a static site. Production: https://www.c-p-consulting.xyz (DNS pending) and https://cpcstudio.vercel.app
