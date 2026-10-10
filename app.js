@@ -2,21 +2,26 @@
 
 const menu = document.querySelector('.menu-toggle');
 const navigation = document.getElementById('navigation');
-menu.addEventListener('click', () => {
-  const open = menu.getAttribute('aria-expanded') !== 'true';
-  menu.setAttribute('aria-expanded', String(open));
-  navigation.classList.toggle('is-open', open);
-});
-navigation.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-  menu.setAttribute('aria-expanded', 'false');
-  navigation.classList.remove('is-open');
-}));
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') {
+if (menu && navigation) {
+  menu.addEventListener('click', () => {
+    const open = menu.getAttribute('aria-expanded') !== 'true';
+    menu.setAttribute('aria-expanded', String(open));
+    navigation.classList.toggle('is-open', open);
+  });
+  navigation.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
     menu.setAttribute('aria-expanded', 'false');
     navigation.classList.remove('is-open');
-  }
-});
+  }));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      menu.setAttribute('aria-expanded', 'false');
+      navigation.classList.remove('is-open');
+    }
+  });
+}
+
+const year = document.getElementById('year');
+if (year) year.textContent = String(new Date().getFullYear());
 
 const projects = {
   strategy: {
@@ -32,11 +37,13 @@ const projects = {
 };
 const projectDialog = document.getElementById('project-dialog');
 const enquiryDialog = document.getElementById('enquiry-dialog');
+
 function openDialog(dialog) {
   dialog.showModal();
   document.body.classList.add('modal-open');
 }
-[projectDialog, enquiryDialog].forEach(dialog => {
+
+[projectDialog, enquiryDialog].filter(Boolean).forEach(dialog => {
   dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => document.body.classList.remove('modal-open'));
   dialog.addEventListener('click', event => {
@@ -45,7 +52,9 @@ function openDialog(dialog) {
     if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close();
   });
 });
+
 document.querySelectorAll('[data-project]').forEach(card => card.addEventListener('click', () => {
+  if (!projectDialog) return;
   const project = projects[card.dataset.project];
   document.getElementById('project-title').textContent = project.title;
   document.getElementById('project-description').textContent = project.description;
@@ -57,18 +66,27 @@ document.querySelectorAll('[data-project]').forEach(card => card.addEventListene
   }));
   openDialog(projectDialog);
 }));
-document.getElementById('project-contact').addEventListener('click', () => projectDialog.close());
-document.getElementById('open-enquiry').addEventListener('click', () => openDialog(enquiryDialog));
-document.getElementById('year').textContent = String(new Date().getFullYear());
+
+const projectContact = document.getElementById('project-contact');
+if (projectContact && projectDialog) {
+  projectContact.addEventListener('click', () => projectDialog.close());
+}
+
+const openEnquiry = document.getElementById('open-enquiry');
+if (openEnquiry && enquiryDialog) {
+  openEnquiry.addEventListener('click', () => openDialog(enquiryDialog));
+}
 
 const PUBLIC_EMAIL = 'hello@c-p-consulting.xyz';
-
-document.getElementById('enquiry-form').addEventListener('submit', event => {
-  event.preventDefault();
-  const values = new FormData(event.currentTarget);
-  const body = `CPC — PROJECT BRIEF\nCartwright - Prochak Consultants\n\nName: ${values.get('name')}\nEmail: ${values.get('email')}\nCompany / studio: ${values.get('company') || 'Not provided'}\nArea: ${values.get('service')}\n\nTHE AMBITION\n${values.get('brief')}\n`;
-  const subject = encodeURIComponent(`CPC enquiry — ${values.get('service')}`);
-  const mailto = `mailto:${PUBLIC_EMAIL}?subject=${subject}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailto;
-  document.getElementById('form-result').textContent = `Opening your email app to ${PUBLIC_EMAIL}. Nothing is stored on this site.`;
-});
+const enquiryForm = document.getElementById('enquiry-form');
+if (enquiryForm) {
+  enquiryForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const values = new FormData(event.currentTarget);
+    const body = `CPC — PROJECT BRIEF\nCartwright - Prochak Consultants\n\nName: ${values.get('name')}\nEmail: ${values.get('email')}\nCompany / studio: ${values.get('company') || 'Not provided'}\nArea: ${values.get('service')}\n\nTHE AMBITION\n${values.get('brief')}\n`;
+    const subject = encodeURIComponent(`CPC enquiry — ${values.get('service')}`);
+    const mailto = `mailto:${PUBLIC_EMAIL}?subject=${subject}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+    document.getElementById('form-result').textContent = `Opening your email app to ${PUBLIC_EMAIL}. Nothing is stored on this site.`;
+  });
+}

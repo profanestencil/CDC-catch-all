@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="is-loading">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,18 +21,23 @@
   <meta name="twitter:image" content="https://www.c-p-consulting.xyz/assets/CPC-hero-ribbon.webp">
   <link rel="icon" href="/assets/favicon.png" type="image/png">
   <link rel="stylesheet" href="/styles.css">
+  <script src="/motion/lottie.min.js" defer></script>
+  <script src="/motion/cpc-loader.js" defer></script>
+  <script src="/motion/page-loader.js" defer></script>
   <script src="/app.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <div id="cpc-page-loader" class="cpc-page-loader" data-animation="/assets/lottie/CPC-cat-loader-light.json" data-label="Loading CPC…"></div>
+  <p id="page-status" class="visually-hidden" role="status" aria-live="polite"></p>
   <header class="site-header">
-    <a class="brand" href="#" aria-label="Cartwright - Prochak Consultants home">
+    <a class="brand" href="/" aria-label="Cartwright - Prochak Consultants home">
       <img class="brand-sigil" src="/assets/CPC-swiss-sigil.png" alt="" width="48" height="48">
       <img class="brand-wordmark" src="/assets/CPC-swiss-wordmark.png" alt="Cartwright - Prochak Consultants" width="270" height="45">
     </a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation">Menu <span aria-hidden="true">+</span></button>
     <nav id="navigation" aria-label="Main navigation">
-      <a href="#about">About</a><a href="#expertise">Expertise</a><a href="#perspectives">Perspectives</a><a class="nav-contact" href="#contact">Start a conversation <span aria-hidden="true">↗</span></a>
+      <a href="#about">About</a><a href="#expertise">Expertise</a><a href="#perspectives">Perspectives</a><a href="/news">News</a><a class="nav-contact" href="#contact">Start a conversation <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
   <main id="main">
