@@ -61,18 +61,14 @@ document.getElementById('project-contact').addEventListener('click', () => proje
 document.getElementById('open-enquiry').addEventListener('click', () => openDialog(enquiryDialog));
 document.getElementById('year').textContent = String(new Date().getFullYear());
 
+const PUBLIC_EMAIL = 'hello@c-p-consulting.xyz';
+
 document.getElementById('enquiry-form').addEventListener('submit', event => {
   event.preventDefault();
   const values = new FormData(event.currentTarget);
-  const text = `CPC — PROJECT BRIEF\nCartwright - Prochak Consultants\n\nName: ${values.get('name')}\nEmail: ${values.get('email')}\nCompany / studio: ${values.get('company') || 'Not provided'}\nArea: ${values.get('service')}\n\nTHE AMBITION\n${values.get('brief')}\n\nPrepared locally. This brief has not been sent to CPC.\n`;
-  const file = new Blob([text], { type: 'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(file);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'CPC-project-brief.txt';
-  document.body.append(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-  document.getElementById('form-result').textContent = 'Your brief is ready to save. Nothing has been sent or stored on a server.';
+  const body = `CPC — PROJECT BRIEF\nCartwright - Prochak Consultants\n\nName: ${values.get('name')}\nEmail: ${values.get('email')}\nCompany / studio: ${values.get('company') || 'Not provided'}\nArea: ${values.get('service')}\n\nTHE AMBITION\n${values.get('brief')}\n`;
+  const subject = encodeURIComponent(`CPC enquiry — ${values.get('service')}`);
+  const mailto = `mailto:${PUBLIC_EMAIL}?subject=${subject}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailto;
+  document.getElementById('form-result').textContent = `Opening your email app to ${PUBLIC_EMAIL}. Nothing is stored on this site.`;
 });
