@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cpcstudio.vercel.app/sitemap.xml
+Sitemap: https://c-p-consulting.xyz/sitemap.xml
